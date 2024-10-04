@@ -4,10 +4,10 @@ Rubik's Cube Solver in Rust
 A multithreaded Rubik's cube solver implemented in Rust, exploring different move sequences concurrently to find solutions efficiently.
 Features
 
-    Concurrent solving using Rust's tokio crate
-    Utilizes multiple CPU cores for faster solving
-    Basic implementation of a Rubik's cube solver algorithm
-    Modular design separating cube representation and solving logic
+- Concurrent solving using Rust's tokio crate
+- Utilizes multiple CPU cores for faster solving
+- Basic implementation of a Rubik's cube solver algorithm
+- Modular design separating cube representation and solving logic
 
 Usage
 
