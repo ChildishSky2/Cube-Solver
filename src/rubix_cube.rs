@@ -793,82 +793,14 @@ impl RubixCube{
 
 }
 
+
 pub(crate) trait Iddfs {
-   fn search_iddfs(&mut self, depth_to_search: u8);
-
-   fn iddfs(&mut self, depth: u8) -> bool;
-}
-
-impl Iddfs for RubixCube{
-    fn search_iddfs(&mut self, depth_to_search : u8) {
-        //fine up to depth 6 but beyond that begins to take too long
-
-        //depth 7 -> 2100 seconds
-        //depth 8 -> ~40000 seconds (expected)
-        let now = Instant::now();
-        for depth in 0..depth_to_search{
-
-            let solution = self.iddfs(depth);
-    
-            let elapsed_time = now.elapsed();
-            if solution{
-                println!("found solution at depth: {}; Elapsed time: {:?}.{:?}s", depth, elapsed_time.as_secs(), elapsed_time.as_millis());
-                for v in self.get_solving_route(){
-                    print!("{} ", v);
-                }
-                break;
-            }
-            else{
-                println!("found no solution at depth: {}; Elapsed time: {:?}.{:?}s", depth, elapsed_time.as_secs(), elapsed_time.as_millis());
-            }
-        };
-    }
-
-    fn iddfs(&mut self, depth: u8) -> bool
-    {
-
-        if depth <= 0{
-            return self.is_solved();
-        }
-
-        for next_move in MOVED_BY_3_UP{
-            if self.past_moves[self.past_moves.len()-1] + 3 == next_move{
-                continue;
-            };
-            
-
-            self.turn_cube(&next_move);
-            let solved = self.iddfs(depth-1);
-            if solved{
-                self.solving_route.push(next_move);
-                return true;
-            }
-            self.undo_turn();
-        };
-        for next_move in MOVED_BY_3_DOWN{
-            if self.past_moves[self.past_moves.len()-1] == 3 + next_move{
-                continue;
-            };
-            
-            self.turn_cube(&next_move);
-            let solved = self.iddfs(depth-1);
-            if solved{
-                self.solving_route.push(next_move);
-                return true;
-            }
-            self.undo_turn();
-        };
-        return false;
-    }
-}
-
-pub(crate) trait iddfs {
     fn thread_search_iddfs(&mut self, depth_to_search: u8);
  
     fn thread_iddfs(&mut self, depth: u8) -> (bool, Vec<u8>);
  }
 
-impl iddfs for  RubixCube{
+impl Iddfs for  RubixCube{
     fn thread_search_iddfs(&mut self, depth_to_search : u8) {
         //fine up to depth 6 but beyond that begins to take too long
 

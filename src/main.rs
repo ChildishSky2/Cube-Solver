@@ -1,7 +1,7 @@
 
 mod rubix_cube;
 //use rubix_cube::Iddfs;
-use rubix_cube::iddfs;
+use rubix_cube::Iddfs;
 fn main() {
     let mut rubix = rubix_cube::RubixCube::create_solved_rubix();
 
